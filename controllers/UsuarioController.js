@@ -20,7 +20,7 @@ module.exports = {
         const { nome, email, senha } = req.body;
 
         // validação para os campos
-        if (!nome || !email || !senha ) {
+        if (!nome || !email || !senha) {
             res.status(400).json({ erro: "Enviar nome, email e senha" });
             return;
         }
@@ -28,9 +28,9 @@ module.exports = {
 
         //Valida se e-mail já foi cadastrado
         try {
-            const dados = await knex("usuarios").where({email});
-            if(dados.length){
-                res.status(400).json({ erro: "E-mail já cadastrado"});
+            const dados = await knex("usuarios").where({ email });
+            if (dados.length) {
+                res.status(400).json({ erro: "E-mail já cadastrado" });
                 return;
             }
         } catch (error) {
@@ -51,45 +51,49 @@ module.exports = {
         }
     },
 
-    async login(req, res) {
-        //Faz a desestruturação do objeto req.body
-        const { email, senha } = req.body;
+    async update(req, res) {
+        const id = req.params["id"];
+        const { email } = req.body;
+        const Ids = await knex("usuarios").where({ id })
 
-        // validação para os campos
-        if (!email || !senha ) {
-            res.status(400).json({ erro: "Login ou senha incorretos" });
+        if (Ids.length == 0) {
+            res.status(400).json({ erro: "Usuario não cadastrado." })
             return;
-        }
 
+        } else {
 
-        //Valida se e-mail esta correto
-        try {
-            const dados = await knex("usuarios").where({email});
-            if(dados.length == 0){
-                res.status(400).json({ erro: "Login ou senha incorretos"});
+            if (!email) {
+                res.status(400).json({ erro: "Enviar Dados" })
                 return;
-            }
 
-            if (bcrypt.compareSync(senha, dados[0].senha)){
-                
-                const token = jwt.sign({
-                    usuario_id: dados[0].id,
-                    usuario_nome: dados[0].nome
-                }, process.env.JWT_KEY,
-                {
-                    expiresIn: "1h"
-                }
-                )
-
-                res.status(200).json({msg: "Ok! Acesso Liberado", token})
             } else {
-                res.status(400).json({msg: "Login ou senha incorretos"})
-            }
 
+                try {
+                    await knex("usuarios").where({ id }).update({ email })
+                    res.status(201).json({ msg: "Dados alterados." })
+                } catch {
+                    res.status(400).json({ erro: error.message });
+                }
+            }
+        }
+    }, 
+
+    async destroy(req, res) {
+        const id = req.params["id"];
+        const Ids = await knex("usuarios").where({ id })
+        if (Ids.length == 0) {
+
+            res.status(200).json({ erro: "Usuario não cadastrado" })
+            return;
+
+        }
+        try {
+            
+            await knex("usuarios").where({ id }).delete()
+            res.status(201).json({ msg: "Usuario Deletado." })
         } catch (error) {
             res.status(400).json({ erro: error.message });
         }
     }
-
 }
 
