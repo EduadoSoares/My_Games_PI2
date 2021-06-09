@@ -119,12 +119,12 @@ module.exports = {
         const search = req.params["search"];
         try{
             const dados = await knex('games')
-            .select("a.id", "a.foto", "a.descricao", "a.preco", "a.empresa")
+            .select("a.id", "a.nome", "a.foto", "a.lancamento", "a.preco")
             .from("games as a")
             .leftJoin("generos as e", "a.generos_id", "e.id")
             .orderBy("a.id", "desc")
-            .where('descricao', 'like', `%${search}%`)
-            .orWhere('preco', 'like', `%${search}%`)
+            .where('preco', 'like', `%${search}%`)
+            .orWhere('lancamento', 'like', `%${search}%`)
             .orderBy('id', 'desc');
             res.status(200).json(dados);
         }catch(error) {
