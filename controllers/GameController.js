@@ -121,7 +121,7 @@ module.exports = {
             const dados = await knex('games')
             .select("a.id", "a.foto", "a.descricao", "a.preco", "a.empresa")
             .from("games as a")
-            .leftJoin("generos as e", "a.marca_id", "e.id")
+            .leftJoin("generos as e", "a.generos_id", "e.id")
             .orderBy("a.id", "desc")
             .where('descricao', 'like', `%${search}%`)
             .orWhere('preco', 'like', `%${search}%`)

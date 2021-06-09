@@ -85,14 +85,13 @@ module.exports = {
 
             res.status(200).json({ erro: "Usuario não cadastrado" })
             return;
-
+        } else {
+            try {
+                await knex("usuarios").where({ id }).delete()
+                res.status(201).json({ msg: "Usuario Deletado." })
+            } catch (error) {
+                res.status(400).json({ erro: error.message });
         }
-        try {
-            
-            await knex("usuarios").where({ id }).delete()
-            res.status(201).json({ msg: "Usuario Deletado." })
-        } catch (error) {
-            res.status(400).json({ erro: error.message });
         }
     }
 }
