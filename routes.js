@@ -12,8 +12,8 @@ routes.get("/gamesGeral", GameController.gamesGeral)
     .post("/games", loginMiddle, GameController.store)
     .get("/destaque", loginMiddle, GameController.destaqueGeral)
     .post("/destaque/:id", loginMiddle, GameController.destaque)
-    .delete("/games/:id", loginMiddle, GameController.delete)
-    .put("/games/:id", loginMiddle, GameController.update)
+    .delete("/games/:id", loginMiddle, GameController.deleteGame)
+    .put("/games/:id", loginMiddle, GameController.updateGame)
     .get("/search/:search", loginMiddle, GameController.search);
 
 
@@ -22,7 +22,7 @@ routes.get("/gamesGeral", GameController.gamesGeral)
 routes.get("/usuarios", UsuarioController.index)
     .post("/usuarios", UsuarioController.store)
     .post("/login", LoginController.login)
-    .delete("/usuarios/:id", UsuarioController.destroy)
-    .put("/usuarios/:id", UsuarioController.update);
+    .delete("/usuarios/:id", UsuarioController.deleteUsuario)
+    .put("/usuarios/:id", UsuarioController.updateUsuario);
 
 module.exports = routes;

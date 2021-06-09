@@ -9,10 +9,10 @@ module.exports = {
     //destroy: exclução
 
 
-    async gamesGeral(req, res) {
-        const games = await knex('games')
-        res.status(200).json(games);
-    },
+    //async gamesGeral(req, res) {
+        //const games = await knex('games')
+        //res.status(200).json(games);
+    //},
 
     async index(req, res) {
 
@@ -76,7 +76,7 @@ module.exports = {
         }
     },
 
-    async update(req, res) {
+    async updateGame(req, res) {
         const id = req.params["id"];
         const { preco } = req.body;
         const Ids = await knex("games").where({ id })
@@ -100,7 +100,7 @@ module.exports = {
     },
 
     //Delete Peripheral
-    async delete(req, res) {
+    async deleteGame(req, res) {
         const id = req.params["id"];
         const Ids = await knex("games").where({ id })
         if (Ids.length == 0) {

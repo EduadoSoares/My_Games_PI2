@@ -51,7 +51,7 @@ module.exports = {
         }
     },
 
-    async update(req, res) {
+    async updateUsuario(req, res) {
         const id = req.params["id"];
         const { email } = req.body;
         const Ids = await knex("usuarios").where({ id })
@@ -78,7 +78,7 @@ module.exports = {
         }
     }, 
 
-    async destroy(req, res) {
+    async deleteUsuario(req, res) {
         const id = req.params["id"];
         const Ids = await knex("usuarios").where({ id })
         if (Ids.length == 0) {
