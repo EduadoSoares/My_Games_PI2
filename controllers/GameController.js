@@ -9,10 +9,10 @@ module.exports = {
     //destroy: exclução
 
 
-    //async gamesGeral(req, res) {
-        //const games = await knex('games')
-        //res.status(200).json(games);
-    //},
+    async gamesGeral(req, res) {
+        const games = await knex('games')
+        res.status(200).json(games);
+    },
 
     async index(req, res) {
 
