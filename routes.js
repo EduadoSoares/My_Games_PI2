@@ -22,7 +22,7 @@ routes.get("/gamesGeral", loginMiddle, GameController.gamesGeral)
 routes.get("/usuarios", UsuarioController.index)
     .post("/usuarios", UsuarioController.store)
     .post("/login", LoginController.login)
-    .delete("/usuarios/:id", UsuarioController.delete)
+    .delete("/usuarios/:id", UsuarioController.destroy)
     .put("/usuarios/:id", UsuarioController.update);
 
 module.exports = routes;
